@@ -1,0 +1,15 @@
+.Form input{
+    border:2px solid black;
+}
+.Box{
+    margin-top: 180px;
+}
+.Register:hover{
+    border: 1px solid black;
+    border-style: dashed;
+}
+@media (max-width:500px){
+    .Box{
+        margin-top: 100px;
+    }
+}

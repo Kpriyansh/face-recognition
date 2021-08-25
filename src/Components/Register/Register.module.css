@@ -1,0 +1,12 @@
+.Form input{
+    border:2px solid black;
+}
+.Box{
+    margin-top: 80px;
+}
+
+@media (max-width:500px){
+    .Box{
+        margin-top: 40px;
+    }
+}
