@@ -16,7 +16,7 @@ class SignIn extends React.Component {
     }
     handleSignin = () => {
        
-        fetch('http://localhost:3002/signin', {
+        fetch('https://dry-castle-87745.herokuapp.com/signin', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
@@ -28,16 +28,17 @@ class SignIn extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                if (data === 'Not found' || data === 'Incorrect password') {
-                    alert(data);
+                if (data === 'Not found' || data === 'Incorrect password'||!data.id) {
+                    alert('Invalid credentials');
                 }
                 else {
-                   
+                    
                     this.props.loadUser(data);
                     this.props.newRoute();
                 }
 
             })
+            .catch(err=>console.log(err));
 
 
     }

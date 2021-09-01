@@ -20,7 +20,7 @@ class Register extends React.Component {
         this.setState({ password: event.target.value });
     }
     handleRegister = () => {
-        fetch('http://localhost:3002/register', {
+        fetch('https://dry-castle-87745.herokuapp.com/register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
@@ -39,8 +39,13 @@ class Register extends React.Component {
                 this.props.loadUser(data); 
                 this.props.newRoute();
                 }
+                else{
+                    alert('Invalid...data or user already exist !');
+                    
+                }
 
             })
+            .catch(console.log);
             
 
     }

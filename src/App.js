@@ -88,7 +88,7 @@ class App extends Component {
       })
   }
   updateRank = () => {
-    fetch('http://localhost:3002/image', {
+    fetch('https://dry-castle-87745.herokuapp.com/image', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',
@@ -115,6 +115,7 @@ class App extends Component {
     })
   }
   displayCoordinates = (response) => {
+    this.updateRank();
     const data = response.outputs[0].data.regions[0].region_info.bounding_box;
 
     const image = document.getElementById('image-element');
@@ -134,6 +135,7 @@ class App extends Component {
     this.setState({ Box: box });
 
     let celebrity_name = name.charAt(0).toUpperCase() + name.slice(1);
+    
     this.setState({ name: celebrity_name });
 
   }
@@ -146,9 +148,7 @@ class App extends Component {
   onButtonSubmit = (event) => {
 
     checkPress = 1;
-    if (this.state.input.length > 10) {
-      this.updateRank();
-    }
+
     this.setState({ ImageUrl: this.state.input });
     app.models.initModel({ id: Clarifai.CELEBRITY_MODEL })
       .then(generalModel => {
@@ -156,19 +156,24 @@ class App extends Component {
       })
       .then(response => {
 
-
+        
         const name = response.outputs[0].data.regions[0].data.concepts[0].name;
 
-        return this.FaceBox(this.displayCoordinates(response), name)
+        this.FaceBox(this.displayCoordinates(response), name)
       }
 
       )
+      .catch(err => {
+        
+        console.log(err);
+      });
   }
   componentDidMount() {
     checkPress = 0;
+    
   }
   componentDidUpdate() {
-    if (this.state.input.length < 15) {
+    if (this.state.input.length < 20) {
       checkPress = 0;
 
     }
@@ -176,7 +181,7 @@ class App extends Component {
 
   handleRouteChange = (newroute) => {
     checkPress = 0;
-    if(newroute === 'signin'){
+    if (newroute === 'signin') {
       this.setState(zeroState);
     }
     this.setState({ route: newroute });
@@ -199,7 +204,7 @@ class App extends Component {
                 <ImagelinkForm
 
                   onInputChange={this.onInputChange}
-                  onButtonSubmit={this.onButtonSubmit}
+                  onButtonSubmit={(event) => this.onButtonSubmit(event)}
                 />
                 {checkPress && this.state.input.length > 10 ?
                   <ImageDisplay box={this.state.Box} PersonName={this.state.name} ImageUrl={this.state.input} />
