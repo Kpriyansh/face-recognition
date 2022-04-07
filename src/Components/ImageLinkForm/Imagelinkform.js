@@ -8,7 +8,7 @@ class ImagelinkForm extends React.Component {
         return (
             <div style={{ textAlign: 'center' }}>
                 <p className='f3'>
-                    {'This magic brain will detect faces in your picture. Git it a try'}
+                    {'This magic brain will detect faces in your picture. Give it a try'}
                 </p>
                 <div style={{ display: "flex", justifyContent: "center" }}>
 
