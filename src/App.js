@@ -88,7 +88,7 @@ class App extends Component {
       })
   }
   updateRank = () => {
-    fetch('https://dry-castle-87745.herokuapp.com/image', {
+    fetch('https://lazy-cyan-jay-slip.cyclic.app/image', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',

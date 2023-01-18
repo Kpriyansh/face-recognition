@@ -20,7 +20,7 @@ class Register extends React.Component {
         this.setState({ password: event.target.value });
     }
     handleRegister = () => {
-        fetch('https://dry-castle-87745.herokuapp.com/register', {
+        fetch('https://lazy-cyan-jay-slip.cyclic.app/register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
