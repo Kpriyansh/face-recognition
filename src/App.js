@@ -80,15 +80,16 @@ class App extends Component {
       {
         user:
         {
-          id: data.id,
-          name: data.name,
+          id: data._id.toString(),
+          name: data.username,
           email: data.email,
           rank: data.rank
         }
       })
   }
   updateRank = () => {
-    fetch('https://lazy-cyan-jay-slip.cyclic.app/image', {
+    console.log('inside update rank')
+    fetch('https://face-recognition-api-priyansh.onrender.com/image', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',
@@ -99,10 +100,11 @@ class App extends Component {
     })
       .then(response => response.json())
       .then(data => {
-        if (data === 'User not found') {
+        if (data === 'Invalid') {
           alert(data);
         }
       })
+      .catch((err) => alert('something went wrong, retry!'))
 
     this.setState({
       user:
@@ -148,15 +150,15 @@ class App extends Component {
   onButtonSubmit = (event) => {
 
     checkPress = 1;
-
-    this.setState({ ImageUrl: this.state.input });
+    this.setState({ ImageUrl: this.state.input});
+    
     app.models.initModel({ id: Clarifai.CELEBRITY_MODEL })
       .then(generalModel => {
         return generalModel.predict(this.state.input);
       })
       .then(response => {
 
-        
+        console.log(response);
         const name = response.outputs[0].data.regions[0].data.concepts[0].name;
 
         this.FaceBox(this.displayCoordinates(response), name)
@@ -167,7 +169,47 @@ class App extends Component {
         
         console.log(err);
       });
+      // console.log('here');
+  
+// URL of image to use. Change this to your image.
+// const IMAGE_URL = 'https://samples.clarifai.com/metro-north.jpg';
+
+    // const raw = JSON.stringify({
+    //   "user_app_id": {
+    //     "user_id": "clarifai",
+    //     "app_id": "main"
+    //   },
+    //   "inputs": [
+    //       {
+    //           "data": {
+    //               "image": {
+    //                   "url": this.state.input
+    //               }
+    //           }
+    //       }
+    //   ]
+    // });
+   
+    // const requestOptions = {
+    //     method: 'POST',
+    //     headers: {
+    //         'Accept': 'application/json',
+    //         'Authorization': 'Key 5fa54d3c30a74e728372603e63ee627f'
+    //     },
+    //     body: raw
+    // };
+
+    // // NOTE: MODEL_VERSION_ID is optional, you can also call prediction with the MODEL_ID only
+    // // https://api.clarifai.com/v2/models/{YOUR_MODEL_ID}/outputs
+    // // this will default to the latest version_id
+
+    // fetch(`https://api.clarifai.com/v2/models/celebrity-face-detection/versions/2ba4d0b0e53043f38dbbed49e03917b6/outputs`, requestOptions)
+    //     .then(response => response.text())
+    //     .then(result => console.log(result))
+    //     .catch(error => console.log('error', error));
+  
   }
+  
   componentDidMount() {
     checkPress = 0;
     

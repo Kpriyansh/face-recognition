@@ -15,8 +15,8 @@ class SignIn extends React.Component {
         this.setState({ password: event.target.value });
     }
     handleSignin = () => {
-       
-        fetch('https://lazy-cyan-jay-slip.cyclic.app/signin', {
+        // console.log(this.state);
+        fetch('https://face-recognition-api-priyansh.onrender.com/signin', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ class SignIn extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                if (data === 'Not found' || data === 'Incorrect password'||!data.id) {
+                if (data === 'Not found' || data === 'Incorrect password'||!data._id) {
                     alert('Invalid credentials');
                 }
                 else {

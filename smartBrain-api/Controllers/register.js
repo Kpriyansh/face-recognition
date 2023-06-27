@@ -1,4 +1,5 @@
 const handleRegister = (req, res, bcrypt, db) => {
+    // console.log(req.body);
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
     db.transaction(trx => {
 

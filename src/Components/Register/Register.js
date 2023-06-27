@@ -20,13 +20,14 @@ class Register extends React.Component {
         this.setState({ password: event.target.value });
     }
     handleRegister = () => {
-        fetch('https://lazy-cyan-jay-slip.cyclic.app/register', {
+        // console.log(this.state);
+        fetch('https://face-recognition-api-priyansh.onrender.com/register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: this.state.name,
+                username: this.state.name,
                 email: this.state.email,
                 password: this.state.password
             })
@@ -35,12 +36,12 @@ class Register extends React.Component {
             .then(response => response.json())
             .then(data => {
                 
-                if(data!=='Invalid'){
+                if(data!=='Invalid' && data !== 'user already exist'){
                 this.props.loadUser(data); 
                 this.props.newRoute();
                 }
                 else{
-                    alert('Invalid...data or user already exist !');
+                    alert(data);
                     
                 }
 
